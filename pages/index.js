@@ -34,7 +34,7 @@ export default function Home() {
         sleep(50).then(() => {
             // this will run on every render
             setAgents(agents.map((e,i) => {
-                return location(e, agents.filter((_, x) => x!=i), 1, 100);
+                return location(e, agents.filter((_, x) => x!=i), 0.001, 200);
             }));
         });
     });
