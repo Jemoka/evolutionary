@@ -13,9 +13,8 @@ export default function location(prevLocation, prevLocations, scale=1, minComfor
 
         // if we are too close for comfort, get comfortable
         if (n(item) <= minComfort) {
-            // negative to move away
-            a = -(item[0]/(n(item)+1e-10))*minComfort;
-            b = -(item[1]/(n(item)+1e-10))*minComfort;
+            a = -(item[0]/(n(item)+1e-10))*scale;
+            b = -(item[1]/(n(item)+1e-10))*scale;
         }
 
         // otherwise, move towards it
@@ -23,11 +22,7 @@ export default function location(prevLocation, prevLocations, scale=1, minComfor
                 res[1] + b*scale];
     }, [0,0]);
 
-    // // and we want to find the average direction by dividing
-    let averageChanges = [totalChanges[0],
-                           totalChanges[1]];
-
     // and return the added result
-    return [prevLocation[0] + averageChanges[0],
-            prevLocation[1] + averageChanges[1]];
+    return [prevLocation[0] + totalChanges[0],
+            prevLocation[1] + totalChanges[1]];
 }
