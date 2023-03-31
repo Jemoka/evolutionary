@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { motion } from 'framer-motion';
 
 import location from "./lib/location";
+import reproduction from "./lib/reproduction.js";
 
 // dummy function
 function sleep (time) {
@@ -19,7 +20,7 @@ function rand(min, max) { // min and max included
 }
 
 // seed the agents
-const N = 500;
+const N = 50;
 const X_BOUNDS = [-10, 10];
 const Y_BOUNDS = [-10, 10];
 const RGE = [...Array(N)];
@@ -27,14 +28,20 @@ const RGE = [...Array(N)];
 export default function Home() {
     let [ agents, setAgents ] = useState((RGE.map(_ =>
         [rand(...X_BOUNDS),
-         rand(...Y_BOUNDS)])));
+         rand(...Y_BOUNDS),
+         [Math.random()*255,
+          Math.random()*255,
+          Math.random()*255],
+         Math.random()])));
 
     useEffect(() => {
         sleep(50).then(() => {
             // this will run on every render
-            setAgents(agents.map((e,i) => {
-                return location(e, agents.filter((_, x) => x!=i), 0.05, 150);
-            }));
+            setAgents(agents.map((e,i) => 
+                location(e, agents.filter((_, x) => x!=i), 0.1, 50)
+            ).map((e,i) =>
+                reproduction(e, agents.filter((_, x) => x!=i),
+                             5, 0, 1000, 0.01)).flat(1).filter(x=>x)); // ring, minN, maxN
         });
     });
 
@@ -46,17 +53,18 @@ export default function Home() {
 
             <main className={styles.main}>
                 <div className={styles.center}>
-                    {RGE.map((_, i) => {
+                    {agents.map((e, i) => {
                         return (<motion.div initial={false}
-                                   key={i}
+                                   key={e[3]}
                                    transition={{
                                        ease: "linear",
-                                       duration: 1,
+                                       duration: 0.1,
                                        /* x: { duration: 1 } */
                                    }}
-                                   animate={{x: agents[i][0],
-                                             y: agents[i][1]}}
-                                   className={styles.node+" bg-red-100"}>&nbsp;</motion.div>);
+                                   animate={{x: e[0],
+                                             y: e[1],
+                                             backgroundColor: `rgba(${e[2][0]}, ${e[2][1]}, ${e[2][2]}, 100)`}}
+                                    className={styles.node}>&nbsp;</motion.div>);
                     })}
                 </div>
             </main>

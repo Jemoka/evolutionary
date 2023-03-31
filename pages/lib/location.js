@@ -13,8 +13,8 @@ export default function location(prevLocation, prevLocations, scale=0.05, minCom
 
         // if we are too close for comfort, get comfortable
         if (n(item) <= minComfort) {
-            a = -(item[0]/(n(item)+1e-10))*scale;
-            b = -(item[1]/(n(item)+1e-10))*scale;
+            a = -(item[0]/(n(item)+0.5))*scale;
+            b = -(item[1]/(n(item)+0.5))*scale;
         }
 
         // otherwise, move towards it
@@ -24,5 +24,7 @@ export default function location(prevLocation, prevLocations, scale=0.05, minCom
 
     // and return the added result
     return [prevLocation[0] + totalChanges[0],
-            prevLocation[1] + totalChanges[1]];
+            prevLocation[1] + totalChanges[1],
+            prevLocation[2],
+           prevLocation[3]];
 }
