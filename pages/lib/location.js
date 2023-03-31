@@ -2,7 +2,7 @@ function n(vec) {
     return Math.sqrt(vec[0]**2 + vec[1]**2);
 }
 
-export default function location(prevLocation, prevLocations, scale=1, minComfort=10) {
+export default function location(prevLocation, prevLocations, scale=0.05, minComfort=10) {
     // distance from each block's previous location to the new location
     let diffs = prevLocations.map((v) =>
         prevLocation.map((value, index) => (v[index] - value)));

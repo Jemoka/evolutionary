@@ -24,7 +24,6 @@ const X_BOUNDS = [-10, 10];
 const Y_BOUNDS = [-10, 10];
 const RGE = [...Array(N)];
 
-
 export default function Home() {
     let [ agents, setAgents ] = useState((RGE.map(_ =>
         [rand(...X_BOUNDS),
@@ -34,7 +33,7 @@ export default function Home() {
         sleep(50).then(() => {
             // this will run on every render
             setAgents(agents.map((e,i) => {
-                return location(e, agents.filter((_, x) => x!=i), 0.05, 300);
+                return location(e, agents.filter((_, x) => x!=i), 0.05, 150);
             }));
         });
     });
