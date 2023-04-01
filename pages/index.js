@@ -26,9 +26,17 @@ const Y_BOUNDS = [-10, 10];
 const RGE = [...Array(N)];
 
 export default function Home() {
+    let [ movement, setMovement] = useState(0.1);
+    let [ comfort, setComfort] = useState(20);
+
+    let [ ring, setRing] = useState(10);
+    let [ minN, setMinN] = useState(0);
+    let [ maxN, setMaxN] = useState(100);
+    let [ reproductionProb, setReproductionProb] = useState(0.000);
+
     let [ agents, setAgents ] = useState((RGE.map(_ =>
         [rand(...X_BOUNDS),
-         rand(...Y_BOUNDS),
+        rand(...Y_BOUNDS),
          [Math.random()*255,
           Math.random()*255,
           Math.random()*255],
@@ -38,10 +46,10 @@ export default function Home() {
         sleep(50).then(() => {
             // this will run on every render
             setAgents(agents.map((e,i) => 
-                location(e, agents.filter((_, x) => x!=i), 0.1, 50)
+                location(e, agents.filter((_, x) => x!=i), movement, comfort)
             ).map((e,i) =>
                 reproduction(e, agents.filter((_, x) => x!=i),
-                             5, 0, 1000, 0.01)).flat(1).filter(x=>x)); // ring, minN, maxN
+                             ring, minN, maxN, reproductionProb)).flat(1).filter(x=>x)); // ring, minN, maxN
         });
     });
 
@@ -68,6 +76,43 @@ export default function Home() {
                     })}
                 </div>
             </main>
+            <div className={styles.controlBox}>
+                <div className="flex justify-between">
+                    <div className="font-bold">Experiments in Particle Evolution</div>
+                    <div>Computational Biology, S23</div>
+                </div>
+
+                <div className={styles.settingsGroup}>
+                        <div className={styles.settingBox}>
+                            <span className={styles.settingLabel}>Step Scale</span>
+                            <input className={styles.settingInput} type="number" value={movement} onChange={(e) => setMovement(Number.parseFloat(e.target.value))}/>
+                        </div>
+
+                        <div className={styles.settingBox}>
+                            <span className={styles.settingLabel}>Minimum Separation</span>
+                            <input className={styles.settingInput} type="number" value={comfort} onChange={(e) => setComfort(Number.parseFloat(e.target.value))}/>
+                        </div>
+
+                        <div className={styles.settingBox}>
+                            <span className={styles.settingLabel}>Reproductive Boundary</span>
+                            <input className={styles.settingInput} type="number" value={ring} onChange={(e) => setRing(Number.parseFloat(e.target.value))}/>
+                        </div>
+                        <div className={styles.settingBox}>
+                            <span className={styles.settingLabel}>Minimum Neighbors</span>
+                            <input className={styles.settingInput} type="number" value={minN} onChange={(e) => setMinN(Number.parseFloat(e.target.value))}/>
+                        </div>
+
+                        <div className={styles.settingBox}>
+                            <span className={styles.settingLabel}>Maximum Neighbors</span>
+                            <input className={styles.settingInput} type="number" value={maxN} onChange={(e) => setMaxN(Number.parseFloat(e.target.value))}/>
+                        </div>
+
+                        <div className={styles.settingBox}>
+                            <span className={styles.settingLabel}>Reproductive Probability</span>
+                            <input className={styles.settingInput} type="number" value={reproductionProb} onChange={(e) => setReproductionProb(Number.parseFloat(e.target.value))}/>
+                        </div>
+                </div>
+            </div>
         </div>
     );
 }

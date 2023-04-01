@@ -1,13 +1,67 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 .main {
     width: 100vw;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-grow: 4;
+}
+
+.controlBox {
+    padding: 15px;
+    margin: 30px;
+    border: dotted 1px gray;
+    border-radius: 7px;
 }
 
 .center {
     position: relative;
+    transform: scale(2);
+}
+
+
+.settingBox {
+    @apply mt-1;
+}
+
+.settingLabel {
+    @apply text-sm italic
+}
+
+.settingInput {
+    border: dotted 0.5px black;
+    border-radius: 5px;
+    width: 60px;
+    @apply text-sm p-1 ml-2;
+}
+
+.settingsGroup {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: space-around;
+    gap: 15px 10px;
+    @apply mt-4;
+}
+
+.settingInput[type=number] {
+  -moz-appearance: textfield;
+}
+
+.settingInput::-webkit-outer-spin-button,
+.settingInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+.settingGroup {
+
 }
 
 .node {
@@ -20,6 +74,16 @@
     left: 0px;
     top: 0px;
     z-index: 1;
-}
 
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+     Introduced in Internet Explorer 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+    -ms-user-select: none;
+    user-select: none;
+}
 
