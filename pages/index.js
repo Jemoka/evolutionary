@@ -5,8 +5,8 @@ import styles from '../styles/Home.module.css';
 import { useState, useEffect } from "react";
 import { motion } from 'framer-motion';
 
-import location from "./lib/location";
-import reproduction from "./lib/reproduction.js";
+import location from "../lib/location";
+import reproduction from "../lib/reproduction.js";
 
 // dummy function
 function sleep (time) {
